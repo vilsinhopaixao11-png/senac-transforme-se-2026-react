@@ -1,35 +1,47 @@
 import { useState } from 'react';
-import { Link } from "react-router";
-function Auth() {
-    const [batatinha, setBatatinha] = useState(0);
+import { Link, useNavigate } from "react-router";
 
-    function sub(){
-    setBatatinha(batatinha - 1)
+function Auth() {
+    const [email, setEmail] = useState("");
+    const [pass, setPass] = useState("");
+    const [msg, setMsg] = useState("");
+
+    const nav = useNavigate();
+
+    function handleLogin() {
+        const users = JSON.parse(localStorage.getItem('users'));
+
+        let user = users.find(u => {
+            return u.email == email;
+        });
+
+        if (!user) {
+            setMsg("Usuário não encontrado .");
+            return;
+        }
+
+        if (user.senha == pass) {
+            setMsg("Login realizado com sucesso .");
+            console.log("aqui esta funcionando");
+            localStorage.setItem("logged", JSON.stringify(user));
+            nav('/painel');
+           
+        } else {
+            setMsg("Senha incorreta.");
+        }
+
     }
+
+
 
     return (
         <>
-
-
-            <nav class="flex items-center py-2 px-4 shadow-lg fixed absolute top-0 bg-white w-full">
-
-
-                <a className="mr-2 py-2 px-2 hover:bg-primary" href="#about">Sobre</a>
-                <a className="mr-2 py-2 px-2 hover:bg-primary" href="#prices"> Preços</a>
-                <a className="mr-2 py-2 px-2 hover:bg-primary" href="#features">Benefícios</a>
-                <Link className="mr-5 py-2 px-4 bg-primary hover:shadow-inner text-white rounded ml-auto shadow left-0"
-                    to="Home">Menu</Link>
-
-
-
-            </nav>
-
             <div className="bg-gradient-to-r from-[#24132F] via-[#17234A] to-[#102A52] flex min-h-screen 
             items-center justify-center px-4 pt-20">
 
-                <div className="w-full max-w-sm rounded-2xl bg-[#080F24] p-6 text-white shadow-2xl">
+                <div className="w-full max-w-sm rounded-2xl bg-[#080F24] p-6 text-black shadow-2xl">
 
-                    <div className="mb-8 text-center">
+                    <div className="mb-10 text-center">
                         <h1 className="text-3xl font-bold">
                             <span className="text-white">Fale </span>
                             <span className="text-orange-500">Mais</span>
@@ -40,25 +52,22 @@ function Auth() {
                         </p>
                     </div>
 
-                   
 
 
 
 
-                    <form class="flex flex-col">
 
+                    <form className="flex flex-col">
+                        {msg}
                         <h2>Login:</h2>
                         Email: <input id="iEmaillogin" type="email"
-                            placeholder="Digite o seu  email cadastrado: " />
-                        Password: <input id="iPassLogin" type="password" placeholder="Digite sua senha:" />
+                            placeholder="Digite o seu  email cadastrado: " onChange={(e) => setEmail(e.target.value)} />
+
+                        Password: <input id="iPassLogin" type="password" placeholder="Digite sua senha:" onChange={(e) => setPass(e.target.value)} />
 
 
-                        <Link class="mr-2 py-2 px-2 bg-btcolor hover:shadow-md text-white rounded-md ml-auto shadow left-0 border-bt"
-                            href="painel.html">Entrar</Link>
+                        <Link className="bg-red-100 rounded-full p-2" onClick={handleLogin}>Entrar</Link>
 
-                        <div className="bg-red-100 rounded-full p-2"onClick={sub}>-</div>
-                        {batatinha}
-                        <div className="bg-green-100 rounded-full p-2"onClick={() => setBatatinha(batatinha + 1)}>+</div>
 
 
                     </form>
@@ -72,13 +81,14 @@ function Auth() {
 
 
 
-                </div>
+            </div>
 
 
 
 
-            </>
-            )
+        </>
+    )
+
 }
 
-            export default Auth;
+export default Auth;

@@ -8,7 +8,7 @@ function Home (){
         <a class="mr-2 py-2 px-2 hover:bg-primary" href="#about">Sobre</a>
         <a class="mr-2 py-2 px-2 hover:bg-primary" href="#prices"> Preços</a>
         <a class="mr-2 py-2 px-2 hover:bg-primary" href="#features">Benefícios</a>
-        <Link class="mr-5 py-2 px-4 bg-primary hover:shadow-inner text-white rounded ml-auto shadow" to="/Auth">Acessar</Link>
+        <Link class="mr-5 py-2 px-4 bg-primary hover:shadow-inner text-white rounded ml-auto shadow" to="/auth">Acessar</Link>
 
 
       </nav>
@@ -19,7 +19,7 @@ function Home (){
 
         class="max-w-lg mx-auto py-6  "
         class="text-center"
-        <h1 >Prótese Pay</h1>
+        <h1 >Protese Pay</h1>
         <h2>Sobre nós</h2>
         class="flex gap-8"
 
