@@ -1,15 +1,20 @@
-import { useState } from 'react';
-import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate} from 'react-router'
 
 function Auth() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [msg, setMsg] = useState("");
 
+    
+
+
+
+
     const nav = useNavigate();
 
     function handleLogin() {
-        const users = JSON.parse(localStorage.getItem('users'));
+        const users = JSON.parse(localStorage.getItem('users'))||[];
 
         let user = users.find(u => {
             return u.email == email;
@@ -21,10 +26,11 @@ function Auth() {
         }
 
         if (user.senha == pass) {
+            localStorage.setItem("logged", JSON.stringify(user));
             setMsg("Login realizado com sucesso .");
             console.log("aqui esta funcionando");
-            localStorage.setItem("logged", JSON.stringify(user));
-            nav('/painel');
+            
+            nav("/painel");
            
         } else {
             setMsg("Senha incorreta.");
@@ -58,18 +64,33 @@ function Auth() {
 
 
                     <form className="flex flex-col">
-                        {msg}
-                        <h2>Login:</h2>
-                        Email: <input id="iEmaillogin" type="email"
-                            placeholder="Digite o seu  email cadastrado: " onChange={(e) => setEmail(e.target.value)} />
+                        {msg && <p className="text-white text-center font-bold mb-2">{msg}</p>}
+                        <h2 className="text-white font-semibold mb-2">Login:</h2>
+                        <span className="text-white text-sm">Email:</span>
+                        <input
+                            id="iEmaillogin"
+                            type="email"
+                            placeholder="Digite o seu email cadastrado:"
+                            className="p-2 rounded mb-2 bg-white text-black"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
-                        Password: <input id="iPassLogin" type="password" placeholder="Digite sua senha:" onChange={(e) => setPass(e.target.value)} />
+                        <span className="text-white text-sm">Password:</span>
+                        <input
+                            id="iPassLogin"
+                            type="password"
+                            placeholder="Digite sua senha:"
+                            className="p-2 rounded mb-4 bg-white text-black"
+                            onChange={(e) => setPass(e.target.value)}
+                        />
 
-
-                        <Link className="bg-red-100 rounded-full p-2" onClick={handleLogin}>Entrar</Link>
-
-
-
+                        <button
+                            type="button"
+                            className="bg-red-100 hover:bg-red-200 text-black rounded-full p-2 font-medium cursor-pointer transition"
+                            onClick={handleLogin}
+                        >
+                            Entrar
+                        </button>
                     </form>
 
 

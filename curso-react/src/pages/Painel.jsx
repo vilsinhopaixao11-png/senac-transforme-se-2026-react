@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {Link} from 'react-router';
 
 function Painel(){
     const [modal, setModal ] = useState(false) //bollean
     const [users, setUsers] = useState([]) //vetor
     const [user, setUser] = useState({}) //objeto
+    const[logged, setLogged] = useState({})
 
+    useEffect(
+        ()=>{
+            const logged =JSON.parse(localStorage.getItem('logged'))
+            setLogged(logged)
+        },
+        []
+    );    
 
     function handleRegister(){
         const newUsers = [...users, user]
@@ -17,7 +25,7 @@ function Painel(){
 
     return(
 <div>
- <h3 id="hello"></h3>
+ <h3 >Bem vindo , {logged?.nome}</h3>
 
 { modal && (
     <div 
