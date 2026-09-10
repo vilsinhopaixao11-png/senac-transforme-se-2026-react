@@ -84,13 +84,13 @@ function Auth() {
                             onChange={(e) => setPass(e.target.value)}
                         />
 
-                        <button
+                        <a
                             type="button"
                             className="bg-red-100 hover:bg-red-200 text-black rounded-full p-2 font-medium cursor-pointer transition"
                             onClick={handleLogin}
                         >
                             Entrar
-                        </button>
+                        </a>
                     </form>
 
 
