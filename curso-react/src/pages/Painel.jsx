@@ -53,14 +53,46 @@ function Painel() {
             password: user.senha
         });
         if (authError) {
-            setMsg(authError)
+            //console.log(authError)
+            setMsg(authError.message)
             setSpiner(false)
             return;
 
+        }
+        if (!authData) {
+            setMsg("Não foi possível cadastrar , verifique a internet")
+            setSpiner(false)
+            return;
+        }
+        const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
+            email: user.email,
+            password: user.senha
+
+        });
+
+        const { error: profileError } = await supabase
+            .from('profiles')
+            .insert({
+                user_id: loginData.user.id,
+                cpf: user.cpf,
+                phone: user.phone,
+                coin: user.coin
+
+
+            });
+
+        if (profileError) {
+            //console.log(profileError)
+            setMsg(profileError.message)
+            setSpiner(false)
+            return;
 
         }
         setSpiner(false)
+
     }
+
+
     return (
         <div>
             <h3 >Bem vindo , {logged?.nome}</h3>
@@ -93,23 +125,28 @@ function Painel() {
                                 <input value={user.nome} onChange={(e) => setUser({ ...user, nome: e.target.value })} type="text" placeholder="Digite seu nome completo" />
                                 Email:
                                 <input value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} type="email" placeholder="Digite o seu melhor email" />
-
+                                cpf:
+                                <input value={user.cpf} onChange={(e) => setUser({ ...user, cpf: e.target.value })} type="text" placeholder="Digite seu cpf completo" />
+                                phone:
+                                <input value={user.phone} onChange={(e) => setUser({ ...user, phone: e.target.value })} type="text" placeholder="Digite seu phone completo" />
                                 Senha:
                                 <input onChange={(e) => setUser({ ...user, senha: e.target.value })} type="password" placeholder="Letra maiúscula e números" />
                                 Data de nascimento:
                                 <input onChange={(e) => setUser({ ...user, nascimento: e.target.value })} type="date" />
                                 {index != -1 && (<a onClick={() => setIsEdit(false)} className="mt-5 bg-primary text-black text-center rounded-md py-2 bg-red-300">Cancelar</a>)}
-                                <a onClick={handleRegister} className="mt-5 bg-primary text-white text-center rounded-md py-2">{spiner? '...':'Salvar'}</a> {msg}
+                                <a onClick={handleRegister} className="mt-5 bg-primary text-white text-center rounded-md py-2">{spiner ? '...' : 'Salvar'}</a> {msg}
                             </form>) : //else
                             <>
                                 <p>Nome: {user.nome}</p>
                                 <p>Email: {user.email}</p>
                                 <p>Data de nascimento: {user.nascimento}</p>
+                                <p>CPF: {user.cpf}</p>
+                                <p>phone:{user.phone}</p>
                                 <a onClick={() => setIsEdit(true)} className="mt-5 bg-primary text-black text-center rounded-md py-2 bg-yellow-500">Editar</a>
                             </>
 
-                            
-                            }
+
+                        }
 
 
                     </div>
@@ -151,8 +188,8 @@ function Painel() {
 
         </div>
     )
+
+
 }
 
-
-
-export default Painel;
+    export default Painel;
