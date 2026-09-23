@@ -192,4 +192,4 @@ function Painel() {
 
 }
 
-    export default Painel;
+export default Painel;
