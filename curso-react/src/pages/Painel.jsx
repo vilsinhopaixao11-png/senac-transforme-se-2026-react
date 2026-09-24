@@ -22,9 +22,21 @@ function Painel() {
     );
 
     useEffect(() => {
-        const usersTemp = JSON.parse(localStorage.getItem('users')) || []
-        if (usersTemp) setUsers(usersTemp)
-    }, [])
+        loadUsers()
+    }, []); 
+
+    //READ - LER
+    async function loadUsers (){
+    const {data, error} = await supabase.from('profiles').select('*')
+    if(error){
+        setMsg(error.message)
+        return;
+    }
+        setUsers(data)
+    }
+
+
+
 
     function deleteUser(index) {
         const newUsers = users.filter((u, i) => {
@@ -74,6 +86,7 @@ function Painel() {
             .from('profiles')
             .insert({
                 user_id: loginData.user.id,
+                nome: user.nome,
                 cpf: user.cpf,
                 phone: user.phone,
                 coin: user.coin
@@ -156,20 +169,22 @@ function Painel() {
             <a onClick={() => {
                 setModal(true)
                 setIsEdit(true)
-            }} className="rounded-full bg-primary text-white px-4 py-3 fixed bottom-0 right-0"> + </a>
+            }} className="rounded-full bg-primary text-black px-4 py-3 fixed bottom-0 right-0"> + </a>
 
             <table>
                 <thead>
                     <th>Nome</th>
-                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
                     <th>Ações</th>
                 </thead>
-                <tbody className="font-secundary">
+                <tbody className="text-black">
                     {users.map((u, i) => (
 
                         <tr>
                             <td>{u.nome}</td>
-                            <td>{u.email}</td>
+                            <td>{u.cpf}</td>
+                            <td>{u.phone}</td>
                             <td>
                                 <a onClick={() => updateUser(i)} className="curson-pointer px-3 mx-4 hover:shadow shadow-md text-white rounl bg-green-500"
                                 >V</a>
