@@ -74,7 +74,7 @@ function Painel() {
                 setSpiner(false)
             }
                 
-          
+          loadUsers()
         
     }
 
@@ -232,7 +232,7 @@ return (
                         <td>{u.phone}</td>
                         <td>
                             <a onClick={() => updateUser(u)} className="curson-pointer px-3 mx-4 hover:shadow shadow-md text-white rounl bg-green-500">V</a>
-                            <a onClick={() => deleteUser(u)} className="curson-pointer px-3 mx-4 hover:shadow shadow-md text-white rounl bg-red-500">X</a>
+                            <a onClick={() => deleteUser(u.id)} className="curson-pointer px-3 mx-4 hover:shadow shadow-md text-white rounl bg-red-500">X</a>
                         </td>
                     </tr>
                 ))}
