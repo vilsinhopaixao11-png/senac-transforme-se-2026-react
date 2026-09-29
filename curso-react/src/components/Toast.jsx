@@ -2,11 +2,11 @@ import { useEffect, useState} from "react";
 export function useToast (){
     const[msg, setMsg] = useState ('');
 
-    return }
+        return {
         msg,
         setMsg
-
-
+    }
+};
 
 
 
