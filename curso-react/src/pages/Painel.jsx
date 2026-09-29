@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { supabase } from '../../utils/supabase';
+import { ToastSucess , useToast} from '../components/Toast';
 
 function Painel() {
     const [modal, setModal] = useState(false) //bollean
@@ -11,7 +12,7 @@ function Painel() {
     const [index, setIndex] = useState(-1)
 
     const [spiner, setSpiner] = useState(false)
-    const [msg, setMsg] = useState('')
+    const [msg, setMsg] = useToast()
 
     useEffect(
         () => {
@@ -198,7 +199,7 @@ return (
                             >
                                 {spiner ? '...' : 'Salvar'}
                             </a>
-                            {msg}
+                            
 
 
                         </form>) : //else
@@ -238,7 +239,7 @@ return (
                 ))}
             </tbody>
         </table>
-
+            <ToastSucess msg={msg} /> 
 
         <a onClick={() => {
             setModal(true)
