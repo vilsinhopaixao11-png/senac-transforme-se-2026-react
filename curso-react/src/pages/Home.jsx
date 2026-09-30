@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import {Template} from '../components/Template';
 function Home() {
   return (
-    <div>
+    
 
       <Template>
         <main>
@@ -70,14 +70,6 @@ function Home() {
 
 
 
-      <footer>
-
-
-      </footer>
-
-
-
-    </div>
   )
 }
 

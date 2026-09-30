@@ -42,7 +42,7 @@ function Auth() {
 
 
     return (
-        <>
+        
             <Template>
                 <div className="bg-gradient-to-r from-[#24132F] via-[#17234A] to-[#102A52] flex min-h-screen 
             items-center justify-center px-4 pt-20">
@@ -111,7 +111,7 @@ function Auth() {
 
             </Template >
                 
-            </>
+           
         
     );
 
